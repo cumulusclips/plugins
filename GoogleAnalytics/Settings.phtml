@@ -1,0 +1,29 @@
+<div id="cc_GoogleAnalytics_settings">
+
+    <h1>Google Analytics Settings</h1>
+    
+    <?php if ($success): ?>
+        <div class="success">Settings have been saved.</div>
+    <?php endif; ?>
+        
+    <?php if ($errors): ?>
+        <div class="error">Please enter a valid tracking id</div>
+    <?php endif; ?>
+    
+    <div class="block">
+        <form method="post">
+            <p class="row-shift">Enter your tracking ID provided by Google Analytics below.</p>
+            <div class="row ">
+                <label>Tracking ID:</label>
+                <input type="text" class="text" name="code" value="<?=$code?>" />
+            </div>     
+            
+            <div class="row-shift">
+                <input type="hidden" name="submitted" value="TRUE">
+                <input type="submit" class="button" value="Save">
+            </div>            
+            
+        </form>
+    </div>
+    
+</div>
