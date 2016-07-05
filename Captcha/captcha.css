@@ -1,0 +1,22 @@
+
+
+/******************************
+Begin User Registration Captcha
+******************************/
+
+#captcha {
+    display: block;
+}
+
+#captcha img {
+    margin-bottom: 25px;
+}
+
+#captcha input {
+    margin-bottom: 5px;
+}
+
+/******************************
+Begin User Registration Captcha
+******************************/
+
