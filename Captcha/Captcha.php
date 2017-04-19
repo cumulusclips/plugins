@@ -71,7 +71,6 @@ class Captcha extends PluginAbstract
         $captchaHtml = str_replace('{{css_class}}', ($this->_invalidCaptcha) ? 'error' : '', $captchaHtml);
 
         // Inject captcha template into body HTML
-        /* $bodyHtml = preg_replace('/<input.*?name="confirm".*?>/i', $captchaHtml, $bodyHtml); */
         $bodyHtml = str_replace('{{captcha}}', $captchaHtml, $bodyHtml);
         return $bodyHtml;
     }
