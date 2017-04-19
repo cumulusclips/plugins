@@ -10,7 +10,7 @@ class Captcha extends PluginAbstract
     /**
      * @var string Description of plugin
      */
-    public $description = 'Renders and validates a captcha on the user registration form. Simply add "{{captcha}}" where you want it to appear in your theme file.';
+    public $description = 'Renders and validates a captcha on the user registration form.';
 
     /**
      * @var string Name of plugin author

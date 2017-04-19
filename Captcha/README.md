@@ -9,5 +9,6 @@ The User Registration Captcha plugin adds and validates a captcha to the user re
 * Open the file /cc-contents/themes/{your-theme}/register.phtml for editing
 * Add `{{captcha}}` where you want the captcha field to appear
 
- [Report Issues](http://cumulusclips.org/forums/)
- [Browse Code & Contribute](http://cumulusclips.org/resources/Captcha.zip)
+[Report Issues](http://cumulusclips.org/forums/)
+
+[Browse Code & Contribute](http://cumulusclips.org/resources/Captcha.zip)
