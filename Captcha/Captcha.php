@@ -3,35 +3,35 @@
 class Captcha extends PluginAbstract
 {
     /**
-     * @var string Name of plugin 
+     * @var string Name of plugin
      */
     public $name = 'User Registration Captcha';
-    
+
     /**
-     * @var string Description of plugin 
+     * @var string Description of plugin
      */
-    public $description = 'Renders and validates a captcha on the user registration form.';
-    
+    public $description = 'Renders and validates a captcha on the user registration form. Simply add "{{captcha}}" where you want it to appear in your theme file.';
+
     /**
      * @var string Name of plugin author
      */
     public $author = 'CumulusClips';
-    
+
     /**
      * @var string URL to plugin's website
      */
     public $url = 'http://cumulusclips.org/';
-    
+
     /**
      * @var string Current version of plugin
      */
     public $version = '1.0.0';
-    
+
     /**
-     * @var boolean Flag to keep track of captcha errors 
+     * @var boolean Flag to keep track of captcha errors
      */
     private $_invalidCaptcha = false;
-    
+
     /**
      * The plugin's gateway into codebase. Place plugin hook attachments here.
      */
@@ -43,7 +43,7 @@ class Captcha extends PluginAbstract
         Plugin::attachFilter('css.system', array($this, 'generateStyles'));
         Plugin::attachFilter('view.render_body', array($this, 'insertCaptcha'));
     }
-    
+
     /**
      * Adds captcha image route to list of system routes
      * @param array $routes List of system routes
@@ -57,7 +57,7 @@ class Captcha extends PluginAbstract
         ));
         return $routes;
     }
-    
+
     /**
      * Injects captcha into register page DOM
      * @param string $bodyHtml Register page HTML to be rendered
@@ -69,12 +69,13 @@ class Captcha extends PluginAbstract
         $captchaHtml = file_get_contents(dirname(__FILE__) . '/captcha.html');
         $captchaHtml = str_replace('{{host}}', HOST, $captchaHtml);
         $captchaHtml = str_replace('{{css_class}}', ($this->_invalidCaptcha) ? 'error' : '', $captchaHtml);
-        
+
         // Inject captcha template into body HTML
-        $bodyHtml = preg_replace('/<input.*?name="submitted".*?>/i', $captchaHtml, $bodyHtml);
+        /* $bodyHtml = preg_replace('/<input.*?name="confirm".*?>/i', $captchaHtml, $bodyHtml); */
+        $bodyHtml = str_replace('{{captcha}}', $captchaHtml, $bodyHtml);
         return $bodyHtml;
     }
-    
+
     /**
      * Validates given captcha value from registration form
      * @param error $errors List of errors already detected on registration form
@@ -85,12 +86,12 @@ class Captcha extends PluginAbstract
     {
         // Validate Security Text
         if (empty($formData['security_text']) || str_replace(' ', '', $_SESSION['captchaText']) != strtoupper($formData['security_text'])) {
-            $errors['security_text'] = 'Invalid or Expired Session';
+            $errors['security_text'] = 'Invalid security text';
             $this->_invalidCaptcha = true;
         }
         return $errors;
     }
-    
+
     /**
      * Generates random text for captcha and stores it in the session
      */
@@ -98,7 +99,7 @@ class Captcha extends PluginAbstract
     {
         $_SESSION['captchaText'] = $this->_randomText();
     }
-    
+
     /**
      * Generates random text in given length for use in captcha
      * @param int $length Desired length of random text
@@ -115,7 +116,7 @@ class Captcha extends PluginAbstract
         }
         return trim($text);
     }
-    
+
     /**
      * Loads captcha CSS styles and appends them to system CSS
      * @param string $css Current system CSS content

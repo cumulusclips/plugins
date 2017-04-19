@@ -3,7 +3,7 @@
 $this->view->options->disableView = true;
 
 // Verify register page was loaded
-if (empty($_SESSION['formToken'])) {
+if (empty($_SESSION['formNonce'])) {
     App::throw404();
 }
 
