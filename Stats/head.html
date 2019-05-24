@@ -1,0 +1,49 @@
+
+<!-- Table libraries.  -->
+<link href="https://unpkg.com/tabulator-tables@4.2.4/dist/css/semantic-ui/tabulator_semantic-ui.min.css" rel="stylesheet">
+<script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.2.4/dist/js/tabulator.min.js"></script>
+<script type="text/javascript" src="https://oss.sheetjs.com/js-xlsx/xlsx.full.min.js"></script>
+
+<!-- Charting libraries.  -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+<script src="https://unpkg.com/chartjs-plugin-colorschemes@latest/dist/chartjs-plugin-colorschemes.min.js"></script>
+<script>
+// Return a random color scheme name.
+function randomColorScheme(){
+	var colorSchemeNames = Array();
+	var colorSchemes = Chart.colorschemes;
+	Object.keys(colorSchemes).forEach(function(category) {
+			Object.keys(colorSchemes[category]).forEach(function(scheme) {
+				var schemeName = category + '.' + scheme;
+				colorSchemeNames.push(schemeName);
+				});
+			});
+	var randomScheme = colorSchemeNames[Math.floor(Math.random() * colorSchemeNames.length)];
+	return randomScheme;
+}
+</script>
+
+<!-- No hooks to add JS in footer, so we are duplicating jQuery source for now.  -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
+
+<script type="text/javascript">
+$jq = jQuery.noConflict();
+$jq( document ).ready(function() {
+		//trigger download of data.csv file
+		$jq(".download-table-csv").click(function(){
+			$table_csv = $jq(this).data("tablename");
+			$filename = $table_csv + ".csv";
+			window[$table_csv].download("csv", $filename);
+			});
+
+		//trigger download of data.xlsx file
+		$jq(".download-table-xlsx").click(function(){
+			$table_xlsx = $jq(this).data("tablename");
+			$filename = $table_xlsx + ".xlsx";
+			window[$table_xlsx].download("xlsx", $filename);
+			});
+
+		});
+</script>
+
+
