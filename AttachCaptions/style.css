@@ -1,0 +1,26 @@
+.set-default-caption {
+	padding-top: 5px;
+	padding-left: 25px;
+}
+.subtitle-language-block {
+	padding-top: 5px;
+	padding-left: 25px;
+}
+
+form select.subtitle-language {
+	display: inline;
+}
+
+.delete-caption {
+	text-align: right;
+}
+
+.delete-caption a.remove {
+    padding: 5px;
+    color: #900;
+    border: 3px solid #900;
+}
+
+.delete-caption span {
+	padding: 10px;
+}
