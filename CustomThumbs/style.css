@@ -1,0 +1,24 @@
+.set-thumbnail {
+	padding-top: 5px;
+	padding-left: 25px;
+}
+
+.set-thumbnail img {
+    width:100px;
+    height: 100px;
+}
+
+
+.delete-image {
+	text-align: right;
+}
+
+.delete-image a.remove {
+    padding: 5px;
+    color: #900;
+    border: 3px solid #900;
+}
+
+.delete-image span {
+	padding: 10px;
+}
