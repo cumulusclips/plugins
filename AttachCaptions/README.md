@@ -4,25 +4,20 @@ This is a plugin to allow users to upload and attach .vtt and .srt files to thei
 
 # Installation
 
-## Adding a filter to the Attachments area of the video editor
+## Adding a trigger to the Attachments area of the video editor
 
-After installing, you will need to place the relevant filters into the appropriate areas of your theme.  For example, you might start around line 93 of the default theme file account/videos_edit.phtml.  Adding the following filter there allows the plugin to format attachment form elements as needed:
+After installing, you will need to place the relevant code into your theme.  For example, you might start around line 99 of the default theme file account/videos_edit.phtml.  Adding the following trigger there allows the plugin to format attachment form elements as needed:
 
 ```php
-			<div class="upload-progress">
-                        <?php
-                        if( !$attach_captions = Plugin::triggerFilter('videos.edit.attachment.list', $file[0]->fileId, $video->videoId) ):
-                        ?>
-                            <a class="remove" href=""><span class="glyphicon glyphicon-remove"></span></a>
-                            <span class="title"><?php echo $file[0]->name; ?> (<?php echo \Functions::formatBytes($file[0]->filesize,0); ?>)</span>
+            <div class="upload-progress">
 
-                            <span class="pull-right glyphicon glyphicon-ok"> </span>
-                        <?php
-                        else:
-                                echo $attach_captions;
-                        endif;
-                        ?>
+                                        <a class="remove" href=""><span class="glyphicon glyphicon-remove"></span></a>
+                                                                    <span class="title"><?php echo $file[0]->name; ?> (<?php echo \Functions::              formatBytes($file[0]->filesize,0); ?>)</span>
 
+                                                                                                <span class="pull-right glyphicon glyphicon-ok"> </span>
+                                                                                                                            <?php Plugin::triggerEvent( 'videos.edit.attachment.list', $file[0]->fileId, $video-    >videoId ); ?>
+
+                                                                                                                                                    </div>
                         </div>
 ```
 

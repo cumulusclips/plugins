@@ -84,7 +84,7 @@ class AttachCaptions extends PluginAbstract
 		Plugin::attachEvent( 'videos_edit.start' , array( __CLASS__ , 'set_default_caption' ) );
 		Plugin::attachEvent( 'videos_edit.start' , array( __CLASS__ , 'save_caption_language' ) );
 		Plugin::attachEvent( 'videos_edit.start' , array( __CLASS__ , 'cleanup_deleted_meta' ) );
-		Plugin::attachFilter( 'videos.edit.attachment.list' , array( __CLASS__ , 'edit_default_captions' ) );
+		Plugin::attachEvent( 'videos.edit.attachment.list' , array( __CLASS__ , 'edit_default_captions' ) );
 		Plugin::attachFilter( 'theme.watch.attachment.captions' , array( __CLASS__ , 'show_caption_tracks' ) );
 		
 	}
@@ -139,30 +139,33 @@ class AttachCaptions extends PluginAbstract
 	public static function edit_default_captions($file_id, $video_id) {
 		$fileMapper = new FileMapper();
 		$file = $fileMapper->getById($file_id);
-		$link = false;
-		$video_meta = AttachCaptions::get_video_meta($video_id, 'default_caption');
-		$default_caption = $video_meta->meta_value;
+		$link = "";
 		//if it's a caption file
 		if(AttachCaptions::is_caption_file($file))
 		{
-			//if it's not currently the default caption
+            // Retrieve the default caption if set
+            $video_meta = AttachCaptions::get_video_meta($video_id, 'default_caption');
+            if($video_meta) {
+                $default_caption = $video_meta->meta_value;
+            }else{
+                $default_caption = 0;
+            }
+
+			// Set form status if this is the default caption 
 			if($file->fileId == $default_caption)
 			{
 				$checked = "checked";
 			} else{
 				$checked = "";
 			}
-			$link = '<p><span class="title">' . $file->name . ' (' .  \Functions::formatBytes($file->filesize,0) . ')</span></p>';
 			$link .= '<p class="set-default-caption"><input type="radio" name="default_caption" value="' . $file->fileId . '" ' . $checked . '> <label class="control-label default-caption" for="default-caption">Make this the default caption.</label></p>';
 
 			$language = AttachCaptions::get_caption_language($file->fileId);
 			$languages = AttachCaptions::language_list(true);			
 			$link .= include 'select-language-form.php';
-			$link .= '<p class="delete-caption"><a class="remove" href=""><span class="pull-right">Delete File</span></a></p>';
-			//$link .= '<span class="pull-right delete-caption">Delete this caption file. </span>';
 		}
 		
-		return $link;	
+		echo $link;	
 	}
 	
 	/**
